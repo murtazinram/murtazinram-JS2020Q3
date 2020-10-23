@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shelter MAin Page</title>
+    <link rel="stylesheet" type="text/css" href="normalize.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<style>
+    body {
+        display: grid;
+        box-sizing: border-box;
+        grid-template-areas:
+    "start"
+    "about"
+    "pets"
+    "help"
+    "donation"
+    "footer";
+        grid-template-rows: 908px 588px 877px 611px 464px 350px;
+        grid-template-columns: 1fr;
+        grid-row-gap: 1px;
+        grid-column-gap: 10px;
+        height: 100vh;
+        width: 100%;
+        margin: 0 auto;
+    }
+    .container{
+        display: grid;
+        height: 100%;
+        max-width: 1200px;
+        width: 100%;
+        padding: 0;
+        margin: 0 auto;
+    }
+    header, article {
+        padding: 0px;
+        /*background: gold;*/
+    }
+    #pageFooter {
+        grid-area: footer;
+    }
+    #mainStart {
+        grid-area: start;
+        background: url(../../assets/bg-pattern@2x.png), radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%), #211F20;
+    }
+    #mainAbout {
+        grid-area: about;
+    }
+    #mainPets{
+        grid-area: pets;
+    }
+    #mainDonation{
+        grid-area: donation;
+    }
+    #mainHelp{
+        grid-area: help;
+    }
+</style>
+<body>
+<article id="mainStart">
+    <div class="container">
+        <div class="inner_Start">
+            <div>header</div>
+            <div>start</div>
+        </div>
+    </div></article>
+<article id="mainAbout">
+    <div class="container">
+        <div class="innerAbout">
+            <div id="about_pets"></div>
+            <div id="about_pets_text">
+                <h3>About the shelter “Cozy House”</h3>
+                <p>Currently we have 121 dogs and 342 cats on our hands and statistics show that only 20% of them will find a family. The others will continue to live with us and will be waiting for a lucky chance to become dearly loved.</p>
+                <p>We feed our wards with the best food and make sure that they do not get sick, feel comfortable (including psychologically) and well. We are supported by 87 volunteers and 28 employees of various skill levels. About 12% of the animals are taken by the shelter staff. Taking care of the animals, they become attached to the pets and would hardly ever leave them alone.</p>
+            </div>
+        </div>
+    </div></article>
+<article id="mainPets">
+    <div class="container">
+        <div class="innerPets">
+            <div id="heading">1</div>
+            <div id="button_arrow_left">2</div>
+            <div id="card_left">3</div>
+            <div id="card_center">4</div>
+            <div id="card_right">5</div>
+            <div id="button_arrow_right">6</div>
+            <div id="button_primary">7</div>
+        </div>
+    </div></article>
+<article id="mainHelp">
+    <div class="container">
+        <div class="innerHelp">
+            <div id="heading_help"></div>
+            <div id="list">
+                <div class="item">1</div>
+                <div class="item">2</div>
+                <div class="item">3</div>
+                <div class="item">4</div>
+                <div class="item">5</div>
+                <div class="item">6</div>
+                <div class="item">7</div>
+                <div class="item">8</div>
+                <div class="item">9</div>
+            </div>
+        </div>
+    </div></article>
+<article id="mainDonation">
+    <div class="container">mainDonation</div></article>
+<footer id="pageFooter">
+    <div class="container">Footer</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,106 @@
+footer {
+    background: url(../../assets/bg-pattern@2x.png),
+    radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%), #211F20;
+}
+
+.inner_Start {
+    display: grid;
+    grid-template-rows: 180px 1fr;
+    grid-gap: 5px;
+}
+
+.inner_Start > div {
+    background: lightgreen;
+    padding: 8px;
+}
+
+.innerAbout {
+    display: grid;
+    grid-template-rows: 408px;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+    padding-bottom: 100px;
+    background: coral;
+}
+
+.innerAbout > div {
+    background: lightgreen;
+    padding: 8px;
+}
+
+#about_pets {
+    background: url(../../assets/about-pets.png) 176px 0 no-repeat;
+}
+
+#about_pets_text {
+    padding-right: 22%;
+}
+
+.innerPets {
+    display: grid;
+    padding-top: 80px;
+    padding-bottom: 100px;
+    grid-template-areas:
+            "heading heading heading heading heading"
+            "button_arrow_left card_left card_center card_right button_arrow_right"
+            "button_primary button_primary button_primary button_primary button_primary";
+    grid-template-rows: 90px 1fr 52px;
+    grid-template-columns: 52px 1fr 1fr 1fr 52px;
+    grid-row-gap: 3px;
+    grid-column-gap: 3px;
+    background: cornflowerblue;
+}
+.innerPets > div {
+    background: gold;
+}
+#heading {
+    grid-area: heading;
+}
+
+#button_arrow_left {
+    grid-area: button_arrow_left;
+}
+
+#card_left {
+    grid-area: card_left;
+}
+
+#card_center {
+    grid-area: card_center;
+}
+
+#card_right {
+    grid-area: card_right;
+}
+
+#button_arrow_right {
+    grid-area: button_arrow_right;
+}
+
+#button_primary {
+    grid-area: button_primary;
+}
+.innerHelp{
+    display: grid;
+    padding-top: 80px;
+    padding-bottom: 100px;
+    grid-template-areas:
+            "heading_Help"
+            "list";
+    grid-template-rows: 150px 1fr;
+    background: coral;
+    grid-row-gap: 3px;
+}
+.innerHelp > div {
+    background: gold;
+}
+#list{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+            "item item item item item"
+            "item item item item item";
+}
+.item{
+    grid-area: item;
+}
