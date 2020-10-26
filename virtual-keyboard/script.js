@@ -1,3 +1,5 @@
+// https://github.com/rolling-scopes-school/tasks/blob/master/tasks/ready-projects/virtual-keyboard.md
+
 const Keyboard = {
   elements: {
     main: null,
