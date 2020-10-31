@@ -1,6 +1,35 @@
 // https://github.com/rolling-scopes-school/tasks/blob/master/tasks/ready-projects/virtual-keyboard.md
 
 const Keyboard = {
+  keyLayoutEng: [
+    "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
+    "caps","q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]",
+    "shift", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "enter",
+    "done", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?",
+    "voice", "lang", "space", "<", ">"
+  ],
+  keyShiftEng: [
+    "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "backspace",
+    "caps","Q", "W", "E", "R", "T", "Y", "U", "I", "O", "p", "{", "}",
+    "shift", "A", "S", "D", "F", "G", "H", "J", "K", "L", ":", "\"", "enter",
+    "done", "Z", "X", "C", "V", "B", "N", "M", "<", ">", "/",
+    "voice", "lang", "space", "<", ">"
+  ],
+  keyLayoutRus:[
+    "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
+    "caps","й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з", "х", "ъ",
+    "shift", "ф", "ы", "в", "а", "п", "р", "о", "л", "д", "ж", "э", "enter",
+    "done", "я", "ч", "с", "м", "и", "т", "ь", "б", "ю", ".",
+    "voice", "lang", "space", "<", ">"
+  ],
+  keyShiftRus: [
+    "!", "\"", "№", ";", "%", ":", "?", "*", "(", ")", "backspace",
+    "caps","Й", "Ц", "У", "К", "Е", "Н", "Г", "Ш", "Щ", "З", "Х", "Ъ",
+    "shift", "Ф", "Ы", "В", "А", "П", "Р", "О", "Л", "Д", "Ж", "Э", "enter",
+    "done", "Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю", "\,",
+    "voice", "lang", "space", "<", ">"
+  ],
+
   elements: {
     main: null,
     keysContainer: null,
@@ -17,7 +46,7 @@ const Keyboard = {
     capsLock: false
   },
 
-  init() {
+  init: function () {
     // Create main elements
     this.elements.main = document.createElement("div");
     this.elements.keysContainer = document.createElement("div");
@@ -173,6 +202,7 @@ const Keyboard = {
     this.elements.main.classList.add("keyboard--hidden");
   }
 };
+
 
 window.addEventListener("DOMContentLoaded", function () {
   Keyboard.init();
