@@ -1,6 +1,24 @@
 // https://github.com/rolling-scopes-school/tasks/blob/master/tasks/ready-projects/virtual-keyboard.md
 
 const Keyboard = {
+    elements: {
+        main: null,
+        keysContainer: null,
+        keys: []
+    },
+
+    eventHandlers: {
+        oninput: null,
+        onclose: null
+    },
+
+    properties: {
+        value: "",
+        capsLock: false,
+        shift: false,
+        isEnglish: true
+    },
+
     keyLayoutEng: [
         "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
         "caps", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]",
@@ -34,23 +52,6 @@ const Keyboard = {
     insertLineBreakRus: ["backspace", "Ъ", "enter", "."],
     insertLineBreakRusShift: ["backspace", "Ъ", "enter", ","],
 
-    elements: {
-        main: null,
-        keysContainer: null,
-        keys: []
-    },
-
-    eventHandlers: {
-        oninput: null,
-        onclose: null
-    },
-
-    properties: {
-        value: "",
-        capsLock: false,
-        shift: false
-    },
-
     init: function () {
         // Create main elements
         this.elements.main = document.createElement("div");
@@ -79,8 +80,8 @@ const Keyboard = {
 
     _createKeys() {
         const fragment = document.createDocumentFragment();
-        const keyLayout = this.keyLayoutRus
-        const insertLineBreakLayout = this.insertLineBreakRus
+        let keyLayout = this.keyLayoutEng
+        let insertLineBreakLayout = this.insertLineBreakEng
 
         // Creates HTML for an icon
         const createIconHTML = (icon_name) => {
@@ -122,7 +123,7 @@ const Keyboard = {
                     keyElement.classList.add("keyboard__key--wide", "keyboard__key--activatable")
                     keyElement.textContent = 'Shift'
 
-                    keyElement.addEventListener('click', ()=>{
+                    keyElement.addEventListener('click', () => {
                         this._toggleShift()
                         keyElement.classList.toggle("keyboard__key--active", this.properties.shift)
                     });
@@ -165,6 +166,12 @@ const Keyboard = {
                     break
 
                 case 'lang':
+                    keyElement.textContent = this.properties.isEnglish ? 'en' : 'rus';
+
+                    keyElement.addEventListener('click', () => {
+                        this.properties.isEnglish = !this.properties.isEnglish
+                        this._toggleLangauge()
+                    })
                     break
 
                 case '<':
@@ -175,12 +182,10 @@ const Keyboard = {
 
                 default:
                     keyElement.textContent = key.toLowerCase();
-
                     keyElement.addEventListener("click", () => {
                         this.properties.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
                         this._triggerEvent("oninput");
                     });
-
                     break;
             }
 
@@ -202,12 +207,26 @@ const Keyboard = {
 
     _toggleCapsLock() {
         this.properties.capsLock = !this.properties.capsLock;
+        this._changeButtons()
+        // for (const key of this.elements.keys) {
+        //     if (key.childElementCount === 0) {
+        //         key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
+        //     }
+        // }
+    },
 
-        for (const key of this.elements.keys) {
-            if (key.childElementCount === 0) {
-                key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
-            }
-        }
+    _toggleShift(){
+        this.properties.shift = !this.properties.shift
+        this._changeButtons()
+    },
+
+    _toggleLangauge(){
+        this._changeButtons()
+    },
+
+
+    _changeButtons(){
+        ///
     },
 
     open(initialValue, oninput, onclose) {
