@@ -170,7 +170,7 @@ const Keyboard = {
 
                     keyElement.addEventListener('click', () => {
                         this.properties.isEnglish = !this.properties.isEnglish
-                        this._toggleLangauge()
+                        this._toggleLanguage()
                     })
                     break
 
@@ -208,25 +208,52 @@ const Keyboard = {
     _toggleCapsLock() {
         this.properties.capsLock = !this.properties.capsLock;
         this._changeButtons()
-        // for (const key of this.elements.keys) {
-        //     if (key.childElementCount === 0) {
-        //         key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
-        //     }
-        // }
     },
 
-    _toggleShift(){
+    _toggleShift() {
         this.properties.shift = !this.properties.shift
         this._changeButtons()
     },
 
-    _toggleLangauge(){
+    _toggleLanguage() {
         this._changeButtons()
     },
 
 
-    _changeButtons(){
-        ///
+    _changeButtons() {
+        const arr = [
+            "backspace",
+            "caps",
+            "shift",
+            "enter",
+            "done",
+            "voice",
+            "lang",
+            "space",
+            "<",
+            ">"
+        ]
+        let keyLayout = this.keyLayoutEng;
+        if (this.properties.shift && this.properties.isEnglish) {
+            keyLayout = this.keyShiftEng;
+        } else if (this.properties.shift && !this.properties.isEnglish) {
+            keyLayout = this.keyShiftRus;
+        } else if (!this.properties.shift && !this.properties.isEnglish) {
+            keyLayout = this.keyLayoutRus;
+        }
+        let i = 0
+        for (const key of this.elements.keys) {
+            if (arr.indexOf(keyLayout[i]) === -1) {
+                key.textContent = keyLayout[i]
+                if (this.properties.capsLock) {
+                    key.textContent = key.textContent.toUpperCase();
+                }
+            }
+            if (keyLayout[i] === "lang") {
+                key.textContent = this.properties.isEnglish ? "en" : "rus";
+            }
+            i++
+        }
     },
 
     open(initialValue, oninput, onclose) {
