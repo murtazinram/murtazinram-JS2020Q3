@@ -16,41 +16,42 @@ const Keyboard = {
         value: "",
         capsLock: false,
         shift: false,
-        isEnglish: true
+        isEnglish: true,
+        currentCursor: 0
     },
 
     keyLayoutEng: [
         "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
         "caps", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]",
-        "shift", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "enter",
+        "shift", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "Enter",
         "done", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?",
         "voice", "lang", "space", "<", ">"
     ],
     keyShiftEng: [
         "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "backspace",
         "caps", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "p", "{", "}",
-        "shift", "A", "S", "D", "F", "G", "H", "J", "K", "L", ":", "\"", "enter",
+        "shift", "A", "S", "D", "F", "G", "H", "J", "K", "L", ":", "\"", "Enter",
         "done", "Z", "X", "C", "V", "B", "N", "M", "<", ">", "/",
         "voice", "lang", "space", "<", ">"
     ],
     keyLayoutRus: [
         "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
         "caps", "й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з", "х", "ъ",
-        "shift", "ф", "ы", "в", "а", "п", "р", "о", "л", "д", "ж", "э", "enter",
+        "shift", "ф", "ы", "в", "а", "п", "р", "о", "л", "д", "ж", "э", "Enter",
         "done", "я", "ч", "с", "м", "и", "т", "ь", "б", "ю", ".",
         "voice", "lang", "space", "<", ">"
     ],
     keyShiftRus: [
         "!", "\"", "№", ";", "%", ":", "?", "*", "(", ")", "backspace",
         "caps", "Й", "Ц", "У", "К", "Е", "Н", "Г", "Ш", "Щ", "З", "Х", "Ъ",
-        "shift", "Ф", "Ы", "В", "А", "П", "Р", "О", "Л", "Д", "Ж", "Э", "enter",
+        "shift", "Ф", "Ы", "В", "А", "П", "Р", "О", "Л", "Д", "Ж", "Э", "Enter",
         "done", "Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю", "\,",
         "voice", "lang", "space", "<", ">"
     ],
-    insertLineBreakEng: ["backspace", "]", "enter", "?"],
-    insertLineBreakEngShift: ["backspace", "}", "enter", "/"],
-    insertLineBreakRus: ["backspace", "Ъ", "enter", "."],
-    insertLineBreakRusShift: ["backspace", "Ъ", "enter", ","],
+    insertLineBreakEng: ["backspace", "]", "Enter", "?"],
+    insertLineBreakEngShift: ["backspace", "}", "Enter", "/"],
+    insertLineBreakRus: ["backspace", "Ъ", "Enter", "."],
+    insertLineBreakRusShift: ["backspace", "Ъ", "Enter", ","],
 
     init: function () {
         // Create main elements
@@ -129,7 +130,7 @@ const Keyboard = {
                     });
                     break
 
-                case "enter":
+                case "Enter":
                     keyElement.classList.add("keyboard__key--wide");
                     keyElement.innerHTML = createIconHTML("keyboard_return");
 
@@ -163,6 +164,7 @@ const Keyboard = {
                     break;
 
                 case 'voice':
+                    // todo
                     break
 
                 case 'lang':
@@ -175,9 +177,19 @@ const Keyboard = {
                     break
 
                 case '<':
+                    keyElement.textContent = key;
+                    keyElement.id = "<";
+                    keyElement.addEventListener("click", () => {
+                        this.setCaretPosition("textArea", -1);
+                    });
                     break
 
                 case '>':
+                    keyElement.textContent = key;
+                    keyElement.id = ">";
+                    keyElement.addEventListener("click", () => {
+                        this.setCaretPosition("textArea", 1);
+                    });
                     break
 
                 default:
@@ -225,7 +237,7 @@ const Keyboard = {
             "backspace",
             "caps",
             "shift",
-            "enter",
+            "Enter",
             "done",
             "voice",
             "lang",
@@ -268,6 +280,15 @@ const Keyboard = {
         this.eventHandlers.oninput = oninput;
         this.eventHandlers.onclose = onclose;
         this.elements.main.classList.add("keyboard--hidden");
+    },
+
+    setCaretPosition(elemId, caretPos) {
+        let element = document.getElementById(elemId);
+        element.focus();
+        let position = element.selectionStart;
+        element.selectionStart = position + caretPos;
+        element.selectionEnd = position + caretPos;
+        this.properties.curentCursor = position + caretPos;
     }
 };
 
@@ -275,3 +296,63 @@ const Keyboard = {
 window.addEventListener("DOMContentLoaded", function () {
     Keyboard.init();
 });
+
+addEventListener("keydown", (elem) => {
+    for (const key of Keyboard.elements.keys) {
+        console.log(key.textContent)
+        if (elem.key === key.textContent) {
+            key.classList.add("keyboard__key--lighting")
+        }
+        if (elem.key === 'Enter') {
+            if (key.textContent === 'keyboard_return') {
+                key.classList.add("keyboard__key--lighting")
+            }
+        }
+        if (elem.key === 'CapsLock') {
+            if (key.textContent === 'keyboard_capslock') {
+                key.classList.add("keyboard__key--lighting")
+            }
+        }
+        if (elem.key === 'Backspace') {
+            if (key.textContent === 'backspace') {
+                key.classList.add("keyboard__key--lighting")
+            }
+        }
+        if (elem.key === ' ') {
+            if (key.textContent === 'space_bar') {
+                key.classList.add("keyboard__key--lighting")
+            }
+        }
+    }
+
+});
+addEventListener("keyup", (elem) => {
+    for (const key of Keyboard.elements.keys) {
+        if (elem.key === key.textContent) {
+            key.classList.remove("keyboard__key--lighting")
+        }
+        if (elem.key === 'Enter') {
+            if (key.textContent === 'keyboard_return') {
+                key.classList.remove("keyboard__key--lighting")
+            }
+        }
+        if (elem.key === 'CapsLock') {
+            if (key.textContent === 'keyboard_capslock') {
+                key.classList.remove("keyboard__key--lighting")
+            }
+        }
+        if (elem.key === 'Backspace') {
+            if (key.textContent === 'backspace') {
+                key.classList.remove("keyboard__key--lighting")
+            }
+        }
+        if (elem.key === ' ') {
+            if (key.textContent === 'space_bar') {
+                key.classList.remove("keyboard__key--lighting")
+            }
+        }
+    }
+
+});
+
+

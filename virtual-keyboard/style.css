@@ -81,6 +81,11 @@
     background: rgba(0, 0, 0, 0.25);
 }
 
+.keyboard__key--lighting{
+    background: #08ff00;
+    color: #004134;
+}
+
 @media (max-width: 488px) {
     .keyboard__key {
         margin: 1px;
