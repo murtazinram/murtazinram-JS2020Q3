@@ -17,7 +17,7 @@ const Keyboard = {
         capsLock: false,
         shift: false,
         isEnglish: true,
-        currentCursor: 0
+        currentCursor: 0,
     },
 
     keyLayoutEng: [
@@ -29,7 +29,7 @@ const Keyboard = {
     ],
     keyShiftEng: [
         "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "backspace",
-        "caps", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "p", "{", "}",
+        "caps", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "{", "}",
         "shift", "A", "S", "D", "F", "G", "H", "J", "K", "L", ":", "\"", "Enter",
         "done", "Z", "X", "C", "V", "B", "N", "M", "<", ">", "/",
         "voice", "lang", "space", "<", ">"
@@ -231,7 +231,6 @@ const Keyboard = {
         this._changeButtons()
     },
 
-
     _changeButtons() {
         const arr = [
             "backspace",
@@ -299,7 +298,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
 addEventListener("keydown", (elem) => {
     for (const key of Keyboard.elements.keys) {
-        console.log(key.textContent)
+        // console.log(key.textContent)
         if (elem.key === key.textContent) {
             key.classList.add("keyboard__key--lighting")
         }
@@ -308,9 +307,16 @@ addEventListener("keydown", (elem) => {
                 key.classList.add("keyboard__key--lighting")
             }
         }
+        if (elem.key === 'Shift') {
+            if (key.textContent === 'Shift') {
+                Keyboard._toggleShift()
+                key.classList.toggle("keyboard__key--lighting", Keyboard.properties.shift)
+            }
+        }
         if (elem.key === 'CapsLock') {
             if (key.textContent === 'keyboard_capslock') {
-                key.classList.add("keyboard__key--lighting")
+                Keyboard._toggleCapsLock()
+                key.classList.toggle("keyboard__key--lighting", Keyboard.properties.capsLock)
             }
         }
         if (elem.key === 'Backspace') {
@@ -320,6 +326,16 @@ addEventListener("keydown", (elem) => {
         }
         if (elem.key === ' ') {
             if (key.textContent === 'space_bar') {
+                key.classList.add("keyboard__key--lighting")
+            }
+        }
+        if (elem.keyCode === 37) {  //<
+            if (key.textContent === '<') {
+                key.classList.add("keyboard__key--lighting")
+            }
+        }
+        if (elem.keyCode === 39) {  //>
+            if (key.textContent === '>') {
                 key.classList.add("keyboard__key--lighting")
             }
         }
@@ -328,16 +344,11 @@ addEventListener("keydown", (elem) => {
 });
 addEventListener("keyup", (elem) => {
     for (const key of Keyboard.elements.keys) {
-        if (elem.key === key.textContent) {
+        if (elem.key === key.textContent && elem.key !== 'Shift') {
             key.classList.remove("keyboard__key--lighting")
         }
         if (elem.key === 'Enter') {
             if (key.textContent === 'keyboard_return') {
-                key.classList.remove("keyboard__key--lighting")
-            }
-        }
-        if (elem.key === 'CapsLock') {
-            if (key.textContent === 'keyboard_capslock') {
                 key.classList.remove("keyboard__key--lighting")
             }
         }
@@ -351,8 +362,28 @@ addEventListener("keyup", (elem) => {
                 key.classList.remove("keyboard__key--lighting")
             }
         }
+        if (elem.keyCode === 37) {  //<
+            if (key.textContent === '<') {
+                key.classList.remove("keyboard__key--lighting")
+            }
+        }
+        if (elem.keyCode === 39) {  //>
+            if (key.textContent === '>') {
+                key.classList.remove("keyboard__key--lighting")
+            }
+        }
     }
-
 });
+
+document.onkeydown = function(e) {
+    e = e || window.event;
+    if (e.ctrlKey && e.altKey) {
+        Keyboard.properties.isEnglish = !Keyboard.properties.isEnglish
+        Keyboard._toggleLanguage()
+    }
+    return true;
+}
+
+// alert('Привет!, для смены языка нажмите Ctrl+Alt')
 
 
