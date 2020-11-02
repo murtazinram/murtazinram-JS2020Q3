@@ -1,25 +1,6 @@
 // https://github.com/rolling-scopes-school/tasks/blob/master/tasks/ready-projects/virtual-keyboard.md
 
 const Keyboard = {
-    elements: {
-        main: null,
-        keysContainer: null,
-        keys: []
-    },
-
-    eventHandlers: {
-        oninput: null,
-        onclose: null
-    },
-
-    properties: {
-        value: "",
-        capsLock: false,
-        shift: false,
-        isEnglish: true,
-        currentCursor: 0,
-    },
-
     keyLayoutEng: [
         "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
         "caps", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]",
@@ -48,6 +29,25 @@ const Keyboard = {
         "done", "Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю", "\,",
         "voice", "lang", "space", "<", ">"
     ],
+
+    elements: {
+        main: null,
+        keysContainer: null,
+        keys: []
+    },
+
+    eventHandlers: {
+        oninput: null,
+        onclose: null
+    },
+
+    properties: {
+        value: "",
+        capsLock: false,
+        shift: false,
+        isEnglish: true,
+        currentCursor: 0,
+    },
     insertLineBreakEng: ["backspace", "]", "Enter", "?"],
     insertLineBreakEngShift: ["backspace", "}", "Enter", "/"],
     insertLineBreakRus: ["backspace", "Ъ", "Enter", "."],
@@ -95,7 +95,6 @@ const Keyboard = {
 
             // Add attributes/classes
             keyElement.setAttribute("type", "button");
-            // keyElement.setAttribute("data-key", '71');
             keyElement.classList.add("keyboard__key", 'key');
 
             switch (key) {
@@ -208,7 +207,6 @@ const Keyboard = {
                 fragment.appendChild(document.createElement("br"));
             }
         });
-
         return fragment;
     },
 
@@ -299,7 +297,6 @@ window.addEventListener("DOMContentLoaded", function () {
 
 addEventListener("keydown", (elem) => {
     for (const key of Keyboard.elements.keys) {
-        // console.log(key.textContent)
         if (elem.key === key.textContent) {
             key.classList.add("keyboard__key--lighting")
         }
@@ -311,7 +308,7 @@ addEventListener("keydown", (elem) => {
         if (elem.key === 'Shift') {
             if (key.textContent === 'Shift') {
                 Keyboard._toggleShift()
-                key.classList.toggle("keyboard__key--lighting", Keyboard.properties.shift)
+                key.classList.add("keyboard__key--lighting")
             }
         }
         if (elem.key === 'CapsLock') {
@@ -373,18 +370,25 @@ addEventListener("keyup", (elem) => {
                 key.classList.remove("keyboard__key--lighting")
             }
         }
+        if (elem.key === 'Shift') {
+            if (key.textContent === 'Shift') {
+                Keyboard._toggleShift();
+                key.classList.remove("keyboard__key--lighting")
+            }
+        }
     }
 });
 
-
 document.onkeydown = function (e) {
     e = e || window.event;
-    if (e.ctrlKey && e.altKey) {
+    if (e.shiftKey && e.altKey) {
         Keyboard.properties.isEnglish = !Keyboard.properties.isEnglish
         Keyboard._toggleLanguage()
     }
     return true;
 }
-alert('Привет!, для смены языка нажмите Ctrl+Alt')
+
+console.log(Keyboard.properties.value)
+alert('Привет!, для смены языка нажмите Shift+Alt, я увидел что сломался ввод от клика мыши(вводит только англ), если найдешь где напиши пжта)')
 
 
