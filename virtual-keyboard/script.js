@@ -95,7 +95,7 @@ const Keyboard = {
 
             // Add attributes/classes
             keyElement.setAttribute("type", "button");
-            keyElement.setAttribute("data-key", '71');
+            // keyElement.setAttribute("data-key", '71');
             keyElement.classList.add("keyboard__key", 'key');
 
             switch (key) {
@@ -377,10 +377,7 @@ addEventListener("keyup", (elem) => {
 });
 
 
-
-
-
-document.onkeydown = function(e) {
+document.onkeydown = function (e) {
     e = e || window.event;
     if (e.ctrlKey && e.altKey) {
         Keyboard.properties.isEnglish = !Keyboard.properties.isEnglish
