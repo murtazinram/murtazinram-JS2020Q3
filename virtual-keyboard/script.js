@@ -95,7 +95,8 @@ const Keyboard = {
 
             // Add attributes/classes
             keyElement.setAttribute("type", "button");
-            keyElement.classList.add("keyboard__key");
+            keyElement.setAttribute("data-key", '71');
+            keyElement.classList.add("keyboard__key", 'key');
 
             switch (key) {
                 case "backspace":
@@ -375,6 +376,10 @@ addEventListener("keyup", (elem) => {
     }
 });
 
+
+
+
+
 document.onkeydown = function(e) {
     e = e || window.event;
     if (e.ctrlKey && e.altKey) {
@@ -383,7 +388,6 @@ document.onkeydown = function(e) {
     }
     return true;
 }
-
 // alert('Привет!, для смены языка нажмите Ctrl+Alt')
 
 
