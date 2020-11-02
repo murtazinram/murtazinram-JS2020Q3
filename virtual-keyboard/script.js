@@ -385,6 +385,6 @@ document.onkeydown = function (e) {
     }
     return true;
 }
-// alert('Привет!, для смены языка нажмите Ctrl+Alt')
+alert('Привет!, для смены языка нажмите Ctrl+Alt')
 
 
