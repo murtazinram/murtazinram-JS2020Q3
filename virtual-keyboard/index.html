@@ -9,7 +9,26 @@
 </head>
 <body>
 <textarea class="use-keyboard-input" id="textArea" placeholder="Click here"></textarea>
+<audio src="sounds/tink.wav"></audio>
 <script src="script.js"></script>
+<script>
+    function removeTransition(e) {
+        if (e.propertyName !== 'transform') return;
+        e.target.classList.remove('playing');
+    }
 
+    function playSound(e) {
+        const audio = document.querySelector(`audio`);
+        const key = document.querySelector(`button[type]`);
+        if (!audio) return;
+        key.classList.add('playing');
+        audio.currentTime = 0;
+        audio.play();
+    }
+
+    const keys = Array.from(document.querySelectorAll('.key'));
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+    window.addEventListener('keydown', playSound);
+</script>
 </body>
 </html>
