@@ -76,10 +76,14 @@ const Keyboard = {
                     element.value = currentValue;
                 });
             });
+            element.addEventListener("click", () => {
+                element.selectionStart = this.properties.currentCursor;
+                element.selectionEnd = this.properties.currentCursor;
+            });
         });
     },
 
-    _createKeys() {
+    _createKeys: function () {
         const fragment = document.createDocumentFragment();
         let keyLayout = this.keyLayoutEng
         let insertLineBreakLayout = this.insertLineBreakEng
@@ -135,8 +139,14 @@ const Keyboard = {
                     keyElement.innerHTML = createIconHTML("keyboard_return");
 
                     keyElement.addEventListener("click", () => {
-                        this.properties.value += "\n";
+                        this.properties.value = setTextToTextArea(this.properties.value,
+                            this.properties.currentCursor, 0, '\n');
+                        this.properties.currentCursor += 1;
                         this._triggerEvent("oninput");
+                        let element = document.querySelector("#textArea");
+                        element.selectionStart = this.properties.currentCursor;
+                        element.selectionEnd = this.properties.currentCursor;
+                        element.focus();
                     });
 
                     break;
@@ -146,10 +156,15 @@ const Keyboard = {
                     keyElement.innerHTML = createIconHTML("space_bar");
 
                     keyElement.addEventListener("click", () => {
-                        this.properties.value += " ";
+                        this.properties.value = setTextToTextArea(this.properties.value,
+                            this.properties.currentCursor, 0, ' ');
+                        this.properties.currentCursor += 1;
                         this._triggerEvent("oninput");
+                        let element = document.querySelector("#textArea");
+                        element.selectionStart = this.properties.currentCursor;
+                        element.selectionEnd = this.properties.currentCursor;
+                        element.focus();
                     });
-
                     break;
 
                 case "done":
@@ -194,11 +209,17 @@ const Keyboard = {
 
                 default:
                     keyElement.textContent = key.toLowerCase();
+
                     keyElement.addEventListener("click", () => {
-                        this.properties.value += this.properties.capsLock ? key.toUpperCase() : key.toLowerCase();
+                        this.properties.value = setTextToTextArea(this.properties.value,
+                            this.properties.currentCursor, 0, keyElement.textContent);
+                        this.properties.currentCursor += 1;
                         this._triggerEvent("oninput");
+                        let element = document.querySelector("#textArea");
+                        element.selectionStart = this.properties.currentCursor;
+                        element.selectionEnd = this.properties.currentCursor;
+                        element.focus();
                     });
-                    break;
             }
 
             fragment.appendChild(keyElement);
@@ -284,9 +305,11 @@ const Keyboard = {
         let element = document.getElementById(elemId);
         element.focus();
         let position = element.selectionStart;
+
         element.selectionStart = position + caretPos;
         element.selectionEnd = position + caretPos;
-        this.properties.curentCursor = position + caretPos;
+        this.properties.currentCursor = position + caretPos;
+
     }
 };
 
@@ -294,6 +317,10 @@ const Keyboard = {
 window.addEventListener("DOMContentLoaded", function () {
     Keyboard.init();
 });
+
+function setTextToTextArea(value, start, delCount, newSubStr) {
+    return value.slice(0, start) + newSubStr + value.slice(start + Math.abs(delCount));
+}
 
 addEventListener("keydown", (elem) => {
     for (const key of Keyboard.elements.keys) {
@@ -387,8 +414,3 @@ document.onkeydown = function (e) {
     }
     return true;
 }
-
-console.log(Keyboard.properties.value)
-alert('Привет!, для смены языка нажмите Shift+Alt, я увидел что сломался ввод от клика мыши(вводит только англ), если найдешь где напиши пжта)')
-
-
