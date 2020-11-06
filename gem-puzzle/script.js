@@ -1,5 +1,7 @@
-import { getBoard } from './getBoard.js'
-import { checkResult } from './checkResult.js'
+import {getBoard} from './getBoard.js'
+import {checkResult} from './checkResult.js'
+import {moveCell} from './moveCell.js'
+
 // import getButtons from './getButtons'
 class GemPuzzle {
     constructor() {
@@ -10,24 +12,34 @@ class GemPuzzle {
         this._save = localStorage.getItem('save');
     }
 
+    getHeader(){
 
-    getBoard () {
+    }
+
+
+    getBoard() {
         return getBoard(this._size, this.board)
     }
 
-    checkResult(){
-        return checkResult(this._size, this.getArrayOfCells())
+    checkResult() {
+        if (checkResult(this._size, this.getArrayOfCells())) {
+            setTimeout(() =>
+                alert(`You Win`,), 250,);
+        }
     }
 
-    getArrayOfCells(){
+    getArrayOfCells() {
         return document.querySelectorAll('.cell')
     }
 
-    // getButtons(){
-    //     return getButtons()
-    // }
+    addListeners() {
+        this.board.addEventListener('click', (e) => {
+            moveCell(e.target)
+            this.checkResult()
+        });
+    }
 
-    init(){
+    init() {
         document.body.innerHTML = ''
 
         this.wrapper = document.createElement('main');
@@ -49,6 +61,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
     gemPuzzle.init();
     gemPuzzle.getBoard()
-    let result = gemPuzzle.checkResult();
-    console.log("result" + result)
+    gemPuzzle.addListeners()
+
 });

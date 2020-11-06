@@ -1,13 +1,14 @@
 export function getBoard(size, board) {
     board.innerHTML = '';
     let count = 0;
-    let arr = []
+    // let arr = []
+    let arr =  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 12, 13, 14, 11, 15]
 
-    for (let i = 0; i < 16; i++) {
-        arr.push(i);
-    }
-    console.log(arr)
-    mixedArray(arr)
+    // for (let i = 0; i < 16; i++) {
+    //     arr.push(i);
+    // }
+    // console.log(arr)
+    // mixedArray(arr)
     console.log(arr)
     for (let i = 1; i <= size; i++) {
         for (let j = 1; j <= size; j++) {
