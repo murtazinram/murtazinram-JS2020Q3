@@ -1,4 +1,5 @@
 import { getBoard } from './getBoard.js'
+import { checkResult } from './checkResult.js'
 // import getButtons from './getButtons'
 class GemPuzzle {
     constructor() {
@@ -14,9 +15,17 @@ class GemPuzzle {
         return getBoard(this._size, this.board)
     }
 
-    getButtons(){
-        return getButtons()
+    checkResult(){
+        return checkResult(this._size, this.getArrayOfCells())
     }
+
+    getArrayOfCells(){
+        return document.querySelectorAll('.cell')
+    }
+
+    // getButtons(){
+    //     return getButtons()
+    // }
 
     init(){
         document.body.innerHTML = ''
@@ -40,4 +49,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
     gemPuzzle.init();
     gemPuzzle.getBoard()
+    let result = gemPuzzle.checkResult();
+    console.log("result" + result)
 });
