@@ -1,10 +1,12 @@
-export function checkResult(size, array){
-    let count = 0
-    for (const item of array) {
-        console.log(item.innerText)
-        if (Number(item.innerText) !== count++){
-            return false
-        }
+export function checkResult(size, array) {
+    const temp = []
+    const items = []
+    for (let i = 1; i < Math.pow(size, 2); i++) {
+        temp.push(i + '')
     }
-    return true
+    temp.push('')
+    for (const item of array) {
+        items.push(item.innerText + '')
+    }
+    return JSON.stringify(temp) === JSON.stringify(items)
 }
