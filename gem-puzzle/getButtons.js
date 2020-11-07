@@ -18,4 +18,12 @@ export function getButtons(buttons) {
     btnLoad.id = 'btn-load'
     btnLoad.classList.add('btn', 'btn')
     buttons.appendChild(btnLoad)
+
+    for (let i = 3; i < 9; i++) {
+        const btn = document.createElement('button');
+        btn.id = i.toString();
+        btn.classList.add('btn', 'btn-size');
+        btn.textContent = `${i}x${i}`;
+        buttons.appendChild(btn);
+    }
 }
