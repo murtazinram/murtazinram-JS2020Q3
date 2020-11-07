@@ -22,8 +22,8 @@ export class GemPuzzle {
         getButtons(this.buttons)
     }
 
-    getBoard() {
-        return getBoard(this._size, this.board)
+    getBoard(size = this._size) {
+        return getBoard(size, this.board)
     }
 
     getTime(startTime = this._startTime) {
@@ -32,10 +32,6 @@ export class GemPuzzle {
 
     startDuration() {
         this._time = setInterval(this.getTime, 1000, this._startTime);
-    }
-
-    clearDuration() {
-        clearInterval(this._time);
     }
 
     getMoves() {
@@ -78,8 +74,9 @@ export class GemPuzzle {
             this._time = loadObj._time
             this._size = loadObj._size
             this.getMoves()
-            this.getTime()
             this.board.innerHTML = JSON.parse(localStorage.getItem('saveBoard'))
+            this._startTime = Date.now() - this._time * 1000;
+            this.startDuration()
         }
     }
 
@@ -87,6 +84,14 @@ export class GemPuzzle {
         document.querySelector('#btn-newGame').addEventListener('click', () => this.getBoard())
         document.querySelector('#btn-save').addEventListener('click', () => this.saveGame())
         document.querySelector('#btn-load').addEventListener('click', () => this.loadGame())
+
+        const listOfSize = document.querySelectorAll(".btn-size");
+
+        for (let i = 0; i < listOfSize.length; i++) {
+            console.log(i + 3)
+            listOfSize[i].addEventListener("click", () => this.getBoard(i + 3));
+
+        }
 
         this.board.addEventListener('click', (e) => {
             moveCell(e.target)
