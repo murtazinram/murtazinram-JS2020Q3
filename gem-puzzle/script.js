@@ -3,8 +3,7 @@ import {checkResult} from './checkResult.js'
 import {moveCell} from './moveCell.js'
 import {getHeader} from './getHeader.js'
 import {getTime} from './getTime.js'
-
-// import getButtons from './getButtons'
+import {getButtons} from './getButtons.js'
 class GemPuzzle {
     constructor() {
         this._moves = 0;
@@ -17,6 +16,10 @@ class GemPuzzle {
 
     getHeader() {
         getHeader(this.header)
+    }
+
+    getButtons(){
+        getButtons(this.buttons)
     }
 
     getBoard() {
@@ -42,8 +45,11 @@ class GemPuzzle {
 
     checkResult() {
         if (checkResult(this._size, this.getArrayOfCells())) {
+            let time = document.querySelector('#time');
+            let timeArr = time.innerHTML.split(':');
+
             setTimeout(() =>
-                alert(`You Win`,), 250,);
+                alert(`Ура! Вы решили головоломку за ${timeArr[0]}:${timeArr[1]} и ${this._moves} ходов`,), 250,);
         }
     }
 
@@ -52,6 +58,8 @@ class GemPuzzle {
     }
 
     addListeners() {
+        document.querySelector('#btn-newGame').addEventListener('click', ()=> this.getBoard())
+
         this.board.addEventListener('click', (e) => {
             moveCell(e.target)
             this.checkResult()
@@ -68,13 +76,16 @@ class GemPuzzle {
         this.wrapper = document.createElement('main');
         this.board = document.createElement('div');
         this.header = document.createElement('div');
+        this.buttons = document.createElement('div');
 
         this.wrapper.classList.add('wrapper');
         this.board.classList.add('board');
         this.header.classList.add('header');
+        this.buttons.classList.add('buttons')
 
         this.wrapper.appendChild(this.header);
         this.wrapper.appendChild(this.board);
+        this.wrapper.appendChild(this.buttons)
 
         document.body.appendChild(this.wrapper);
     }
@@ -86,6 +97,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     gemPuzzle.init();
     gemPuzzle.getBoard()
+    gemPuzzle.getButtons()
     gemPuzzle.getHeader()
     gemPuzzle.addListeners()
 });
