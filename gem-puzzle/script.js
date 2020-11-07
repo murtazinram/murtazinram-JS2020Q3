@@ -4,21 +4,21 @@ import {moveCell} from './moveCell.js'
 import {getHeader} from './getHeader.js'
 import {getTime} from './getTime.js'
 import {getButtons} from './getButtons.js'
-class GemPuzzle {
-    constructor() {
-        this._moves = 0;
-        this._startTime = 0;
-        this._time = null;
-        this._size = 4;
-        this._mixed = false;
-        this._save = localStorage.getItem('save');
+
+
+export class GemPuzzle {
+    constructor(_moves, _startTime, _time, _size) {
+        this._moves = _moves
+        this._startTime = _startTime
+        this._time = _time
+        this._size = _size
     }
 
     getHeader() {
         getHeader(this.header)
     }
 
-    getButtons(){
+    getButtons() {
         getButtons(this.buttons)
     }
 
@@ -57,8 +57,36 @@ class GemPuzzle {
         return document.querySelectorAll('.cell')
     }
 
+    saveGame() {
+        if (confirm('Save game ?')) {
+            const saveObj = new GemPuzzle(this._moves, this._startTime, this._time, this._size)
+            let saveBoard = document.querySelector('.board').innerHTML
+
+            localStorage.setItem('saveObj', JSON.stringify(saveObj))
+            localStorage.setItem('saveBoard', JSON.stringify(saveBoard))
+        }
+    }
+
+
+    loadGame() {
+        if (confirm('Load game?')) {
+            const loadObj = JSON.parse(localStorage.getItem('saveObj'))
+            console.log(loadObj)
+
+            this._moves = loadObj._moves
+            this._startTime = loadObj._startTime
+            this._time = loadObj._time
+            this._size = loadObj._size
+            this.getMoves()
+            this.getTime()
+            this.board.innerHTML = JSON.parse(localStorage.getItem('saveBoard'))
+        }
+    }
+
     addListeners() {
-        document.querySelector('#btn-newGame').addEventListener('click', ()=> this.getBoard())
+        document.querySelector('#btn-newGame').addEventListener('click', () => this.getBoard())
+        document.querySelector('#btn-save').addEventListener('click', () => this.saveGame())
+        document.querySelector('#btn-load').addEventListener('click', () => this.loadGame())
 
         this.board.addEventListener('click', (e) => {
             moveCell(e.target)
@@ -88,12 +116,13 @@ class GemPuzzle {
         this.wrapper.appendChild(this.buttons)
 
         document.body.appendChild(this.wrapper);
+        console.log(this.board)
     }
 }
 
 
 window.addEventListener('DOMContentLoaded', () => {
-    const gemPuzzle = new GemPuzzle();
+    const gemPuzzle = new GemPuzzle(0, 0, null, 4);
 
     gemPuzzle.init();
     gemPuzzle.getBoard()
