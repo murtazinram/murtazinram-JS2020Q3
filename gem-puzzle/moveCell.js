@@ -28,6 +28,7 @@ export function moveCell(target) {
             target.classList.remove('light')
             target.classList.add('empty')
             target.innerHTML = ''
+            return true
         }
     }
 }

@@ -39,6 +39,10 @@ export class GemPuzzle {
         moves.textContent = this._moves.toString().padStart(3, '0');
     }
 
+    moveCell(e){
+        if (moveCell(e.target)) this._moves++
+    }
+
     checkResult() {
         if (checkResult(this._size, this.getArrayOfCells())) {
             let time = document.querySelector('#time');
@@ -85,6 +89,7 @@ export class GemPuzzle {
         document.querySelector('#btn-save').addEventListener('click', () => this.saveGame())
         document.querySelector('#btn-load').addEventListener('click', () => this.loadGame())
 
+
         const listOfSize = document.querySelectorAll(".btn-size");
 
         for (let i = 0; i < listOfSize.length; i++) {
@@ -94,9 +99,8 @@ export class GemPuzzle {
         }
 
         this.board.addEventListener('click', (e) => {
-            moveCell(e.target)
+            this.moveCell(e)
             this.checkResult()
-            this._moves++
             this.getMoves()
             this._startTime = new Date
             if (this._moves === 1) this.startDuration()
@@ -135,3 +139,5 @@ window.addEventListener('DOMContentLoaded', () => {
     gemPuzzle.getHeader()
     gemPuzzle.addListeners()
 });
+
+
