@@ -16,7 +16,6 @@ export function moveCell(target) {
     if (targetPosI === i || targetPosJ === j) {
         if (targetPosI === i + 1 || targetPosI === i - 1
             || targetPosJ === j + 1 || targetPosJ === j - 1) {
-            console.log('here')
             empty.id = `cell-${emptyPosition[1]}-${emptyPosition[2]}`
             empty.classList.remove('empty')
             empty.classList.remove('number')
