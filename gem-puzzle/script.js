@@ -5,7 +5,6 @@ import {getHeader} from './getHeader.js'
 import {getTime} from './getTime.js'
 import {getButtons} from './getButtons.js'
 
-
 export class GemPuzzle {
     constructor(_moves, _startTime, _time, _size) {
         this._moves = _moves
@@ -39,7 +38,7 @@ export class GemPuzzle {
         moves.textContent = this._moves.toString().padStart(3, '0');
     }
 
-    moveCell(e){
+    moveCell(e) {
         if (moveCell(e.target)) this._moves++
     }
 
@@ -67,7 +66,6 @@ export class GemPuzzle {
         }
     }
 
-
     loadGame() {
         if (confirm('Load game?')) {
             const loadObj = JSON.parse(localStorage.getItem('saveObj'))
@@ -84,6 +82,29 @@ export class GemPuzzle {
         }
     }
 
+    dragStart(e) {
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('Text', e.target.id);
+    }
+
+    dragOver(e) {
+        e.preventDefault()
+        return true
+    }
+
+    dropCell(e) {
+        if (e.target.innerText === '') {
+            let data = e.dataTransfer.getData('Text')
+            if (moveCell(document.getElementById(data))) this._moves++
+        }
+        e.stopPropagation()
+    }
+
+    playSound() {
+        let sound = document.getElementById("audio");
+        sound.play();
+    }
+
     addListeners() {
         document.querySelector('#btn-newGame').addEventListener('click', () => this.getBoard())
         document.querySelector('#btn-save').addEventListener('click', () => this.saveGame())
@@ -93,9 +114,7 @@ export class GemPuzzle {
         const listOfSize = document.querySelectorAll(".btn-size");
 
         for (let i = 0; i < listOfSize.length; i++) {
-            console.log(i + 3)
             listOfSize[i].addEventListener("click", () => this.getBoard(i + 3));
-
         }
 
         this.board.addEventListener('click', (e) => {
@@ -105,6 +124,25 @@ export class GemPuzzle {
             this._startTime = new Date
             if (this._moves === 1) this.startDuration()
         });
+
+        let cells = document.querySelectorAll('.cell');
+        for (const cell of cells) {
+            cell.onclick = () => {
+                this.playSound()
+            }
+            cell.addEventListener('dragstart', (e) => {
+                this.dragStart(e)
+                this.playSound()
+            });
+            cell.addEventListener('dragover', this.dragOver);
+            cell.addEventListener('drop', (e) => {
+                this.dropCell(e)
+                this.checkResult()
+                this.getMoves()
+                this._startTime = new Date
+                if (this._moves === 1) this.startDuration()
+            });
+        }
     }
 
     init() {
@@ -115,6 +153,11 @@ export class GemPuzzle {
         this.header = document.createElement('div');
         this.buttons = document.createElement('div');
 
+        this.audio = document.createElement('audio')
+        this.audio.id = 'audio'
+        this.audio.src = 'https://www.soundjay.com/button/sounds/button-29.mp3'
+        this.audio.setAttribute("autoplay", 'false')
+
         this.wrapper.classList.add('wrapper');
         this.board.classList.add('board');
         this.header.classList.add('header');
@@ -124,6 +167,7 @@ export class GemPuzzle {
         this.wrapper.appendChild(this.board);
         this.wrapper.appendChild(this.buttons)
 
+        document.body.appendChild(this.audio);
         document.body.appendChild(this.wrapper);
         console.log(this.board)
     }
