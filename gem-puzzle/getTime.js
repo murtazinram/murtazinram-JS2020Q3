@@ -1,4 +1,4 @@
-export function getTime(startTime){
+export function getTime(startTime) {
     const start = new Date(startTime)
     const now = new Date();
     const time = document.querySelector('#time');

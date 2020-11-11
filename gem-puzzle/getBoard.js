@@ -15,12 +15,9 @@ export function getBoard(size, board) {
             const cell = document.createElement('div');
             cell.id = `cell-${i}-${j}`;
             cell.classList.add('cell');
-            cell.setAttribute('draggable','true')
+            cell.setAttribute('draggable', 'true')
 
             if (count !== Math.pow(size, 2)) {
-                if (arr[count] !== 0) {
-                    cell.classList.add('light')
-                }
                 cell.classList.add('number');
                 cell.innerHTML = arr[count]
             }

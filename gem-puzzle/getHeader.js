@@ -1,4 +1,4 @@
-export function getHeader(header){
+export function getHeader(header) {
     header.innerHTML = '';
 
     const movesLabel = document.createElement('span');

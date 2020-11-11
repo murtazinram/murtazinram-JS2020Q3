@@ -1,4 +1,3 @@
-
 export function moveCell(target) {
     // console.log('click=' + target.innerHTML)
     let targetPos = target.id.split('-');
