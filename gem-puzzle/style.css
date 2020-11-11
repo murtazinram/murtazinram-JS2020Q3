@@ -1,1 +1,81 @@
-/*todo*/
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: 'Ubuntu', Arial, sans-serif;
+    font-size: 100%;
+}
+
+body {
+    background: azure;
+    font-size: 1.6rem;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.buttons {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.btn {
+    background: black;
+    font-weight: bolder;
+    margin: 8px 4px;
+    padding: 6px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    outline: none;
+}
+
+.header {
+    margin: 1vh auto;
+}
+
+#moves {
+    margin-right: 15px;
+}
+
+.board {
+    background: #0074d9;
+    display: grid;
+    grid-gap: 2px;
+    height: 60vmin;
+    width: 60vmin;
+    min-height: 300px;
+    min-width: 300px;
+    margin: 0 auto;
+    padding: 1px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.number {
+    font-size: 6vmin;
+    font-weight: revert;
+    color: black;
+    cursor: pointer;
+    background: rgb(228, 228, 228);
+    border: 1px solid #444;
+}
+
+.empty {
+    background: none;
+    border: none;
+}
