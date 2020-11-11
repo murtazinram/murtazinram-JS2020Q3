@@ -105,26 +105,7 @@ export class GemPuzzle {
         sound.play();
     }
 
-    addListeners() {
-        document.querySelector('#btn-newGame').addEventListener('click', () => this.getBoard())
-        document.querySelector('#btn-save').addEventListener('click', () => this.saveGame())
-        document.querySelector('#btn-load').addEventListener('click', () => this.loadGame())
-
-
-        const listOfSize = document.querySelectorAll(".btn-size");
-
-        for (let i = 0; i < listOfSize.length; i++) {
-            listOfSize[i].addEventListener("click", () => this.getBoard(i + 3));
-        }
-
-        this.board.addEventListener('click', (e) => {
-            this.moveCell(e)
-            this.checkResult()
-            this.getMoves()
-            this._startTime = new Date
-            if (this._moves === 1) this.startDuration()
-        });
-
+    initDragAndDrop() {
         let cells = document.querySelectorAll('.cell');
         for (const cell of cells) {
             cell.onclick = () => {
@@ -143,6 +124,36 @@ export class GemPuzzle {
                 if (this._moves === 1) this.startDuration()
             });
         }
+    }
+
+    addListeners() {
+        document.querySelector('#btn-newGame').addEventListener('click', () => {
+            this.getBoard()
+            this.initDragAndDrop();
+        })
+        document.querySelector('#btn-save').addEventListener('click', () => this.saveGame())
+        document.querySelector('#btn-load').addEventListener('click', () => this.loadGame())
+
+
+        const listOfSize = document.querySelectorAll(".btn-size");
+
+        for (let i = 0; i < listOfSize.length; i++) {
+            listOfSize[i].addEventListener("click", () => {
+                this.getBoard(i + 3)
+                this.initDragAndDrop();
+            });
+
+        }
+
+        this.board.addEventListener('click', (e) => {
+            this.moveCell(e)
+            this.checkResult()
+            this.getMoves()
+            this._startTime = new Date
+            if (this._moves === 1) this.startDuration()
+        });
+
+        this.initDragAndDrop();
     }
 
     init() {
