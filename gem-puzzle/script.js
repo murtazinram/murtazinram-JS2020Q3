@@ -42,8 +42,8 @@ export class GemPuzzle {
         if (moveCell(e.target)) this._moves++
     }
 
-    checkResult() {
-        if (checkResult(this._size, this.getArrayOfCells())) {
+    checkResult(size = this._size) {
+        if (checkResult(size, this.getArrayOfCells())) {
             let time = document.querySelector('#time');
             let timeArr = time.innerHTML.split(':');
 
@@ -118,7 +118,7 @@ export class GemPuzzle {
             cell.addEventListener('dragover', this.dragOver);
             cell.addEventListener('drop', (e) => {
                 this.dropCell(e)
-                this.checkResult()
+                this.checkResult(this._size)
                 this.getMoves()
                 this._startTime = new Date
                 if (this._moves === 1) this.startDuration()
@@ -141,13 +141,15 @@ export class GemPuzzle {
             listOfSize[i].addEventListener("click", () => {
                 this.getBoard(i + 3)
                 this.initDragAndDrop();
+                this.checkResult(i + 3)
+                this._size = i + 3
             });
 
         }
 
         this.board.addEventListener('click', (e) => {
             this.moveCell(e)
-            this.checkResult()
+            this.checkResult(this._size)
             this.getMoves()
             this._startTime = new Date
             if (this._moves === 1) this.startDuration()
