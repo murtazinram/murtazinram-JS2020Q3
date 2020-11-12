@@ -8,5 +8,6 @@ export function checkResult(size, array) {
     for (const item of array) {
         items.push(item.innerText + '')
     }
+
     return JSON.stringify(temp) === JSON.stringify(items)
 }
