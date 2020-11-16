@@ -38,6 +38,10 @@ export class GemPuzzle {
         moves.textContent = this._moves.toString().padStart(3, '0');
     }
 
+    setMoves(moves) {
+        this._moves = moves
+    }
+
     moveCell(e) {
         if (moveCell(e.target)) this._moves++
     }
@@ -129,7 +133,10 @@ export class GemPuzzle {
     addListeners() {
         document.querySelector('#btn-newGame').addEventListener('click', () => {
             this.getBoard()
+            this.setMoves(0)
+            clearInterval(this._time)
             this.initDragAndDrop();
+
         })
         document.querySelector('#btn-save').addEventListener('click', () => this.saveGame())
         document.querySelector('#btn-load').addEventListener('click', () => this.loadGame())
@@ -140,9 +147,11 @@ export class GemPuzzle {
         for (let i = 0; i < listOfSize.length; i++) {
             listOfSize[i].addEventListener("click", () => {
                 this.getBoard(i + 3)
+                this.setMoves(0)
                 this.initDragAndDrop();
                 this.checkResult(i + 3)
                 this._size = i + 3
+                clearInterval(this._time)
             });
 
         }
